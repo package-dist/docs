@@ -1,0 +1,19 @@
+{
+  "name": "package-distribution-docs",
+  "version": "1.0.0",
+  "description": "Documentation for the Package Distribution project",
+  "scripts": {
+    "build": "antora antora-playbook.yml",
+    "preview": "antora antora-playbook.yml && npx http-server public -p 8080"
+  },
+  "keywords": [
+    "documentation",
+    "antora"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@antora/cli": "^3.1.0",
+    "@antora/site-generator": "^3.1.0"
+  }
+}

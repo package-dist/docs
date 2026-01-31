@@ -1,0 +1,9 @@
+= What is Package Distribution?
+
+This page will provide comprehensive information about Package Distribution.
+
+== Overview
+
+Package Distribution is a system for managing and distributing software packages.
+
+_More content coming soon..._

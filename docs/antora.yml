@@ -1,0 +1,5 @@
+name: docs
+title: Package Distribution
+version: latest
+nav:
+- modules/ROOT/nav.adoc
