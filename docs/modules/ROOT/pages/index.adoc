@@ -1,0 +1,9 @@
+= Package Distribution
+
+Welcome to the Package Distribution documentation site.
+
+== Getting Started
+
+xref:what-is.adoc[What is Package Distribution?]
+
+Learn more about Package Distribution and how it can help you manage and distribute packages effectively.
