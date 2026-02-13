@@ -1,2 +1,8 @@
 * xref:index.adoc[Home]
 * xref:what-is.adoc[What is Package Distribution?]
+
+== pURL Resolver
+
+* xref:purl-resolver-concepts.adoc[Concepts]
+* xref:purl-resolver-howto.adoc[How-To Guide]
+* xref:purl-resolver-reference.adoc[API Reference]

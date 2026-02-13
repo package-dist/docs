@@ -1,0 +1,437 @@
+= pURL Resolver How-To Guide
+
+This guide provides step-by-step instructions for deploying, configuring, and using the pURL Resolver service.
+
+== Running Locally
+
+=== Prerequisites
+
+* Go 1.21 or later
+* Git
+
+=== Build and Run from Source
+
+. Clone the repository:
++
+[source,bash]
+----
+git clone https://github.com/package-dist/purl-resolver
+cd purl-resolver
+----
+
+. Download dependencies:
++
+[source,bash]
+----
+go mod download
+----
+
+. Build the binary:
++
+[source,bash]
+----
+go build -v -o purl-resolver .
+----
+
+. Run the server:
++
+[source,bash]
+----
+./purl-resolver serve
+----
++
+The server will start on port 8080 by default.
+
+. Verify the service is running:
++
+[source,bash]
+----
+curl http://localhost:8080/healthz
+----
++
+You should receive an `OK` response.
+
+=== Running with Custom Port
+
+To run the server on a different port, use the `--port` flag:
+
+[source,bash]
+----
+./purl-resolver serve --port 9090
+----
+
+Or use the short form:
+
+[source,bash]
+----
+./purl-resolver serve -p 9090
+----
+
+== Deploying to Kubernetes
+
+=== Prerequisites
+
+* Kubernetes cluster (v1.20+)
+* kubectl configured to access your cluster
+* ko (for building container images)
+
+=== Deploy Using Kubernetes Manifests
+
+. Build and deploy using ko:
++
+[source,bash]
+----
+KO_DOCKER_REPO=<your-registry> ko apply -f deploy/
+----
++
+Replace `<your-registry>` with your container registry (e.g., `gcr.io/my-project` or `ghcr.io/myorg`).
+
+. Verify the deployment:
++
+[source,bash]
+----
+kubectl get deployments
+kubectl get pods
+kubectl get services
+----
+
+. Forward the service port to your local machine:
++
+[source,bash]
+----
+kubectl port-forward service/purl-resolver 8080:80
+----
+
+. Test the service:
++
+[source,bash]
+----
+curl http://localhost:8080/healthz
+----
+
+=== Deploy to Local KinD Cluster
+
+For local testing with Kubernetes in Docker (KinD):
+
+. Create a KinD cluster:
++
+[source,bash]
+----
+make kind-create
+----
+
+. Build and deploy:
++
+[source,bash]
+----
+make ko-apply
+----
+
+. View logs:
++
+[source,bash]
+----
+make logs
+----
+
+. Forward the port:
++
+[source,bash]
+----
+make port-forward
+----
+
+. Clean up when done:
++
+[source,bash]
+----
+make kind-delete
+----
+
+== Using the Resolver API
+
+=== Resolve a pURL to an OCI Reference
+
+To resolve a pURL, make a GET request to the `/resolve` endpoint with the pURL as a query parameter.
+
+==== Example 1: Resolve with Digest
+
+[source,bash]
+----
+curl "http://localhost:8080/resolve?purl=pkg:oci/nginx@sha256:abcd1234"
+----
+
+Response:
+[source,json]
+----
+{
+  "purl": "pkg:oci/nginx@sha256:abcd1234",
+  "oci_reference": "docker.io/nginx@sha256:abcd1234"
+}
+----
+
+==== Example 2: Resolve with Custom Registry
+
+[source,bash]
+----
+curl "http://localhost:8080/resolve?purl=pkg:oci/myapp?repository_url=ghcr.io/myorg/myapp&tag=v1.0.0"
+----
+
+Response:
+[source,json]
+----
+{
+  "purl": "pkg:oci/myapp?repository_url=ghcr.io/myorg/myapp&tag=v1.0.0",
+  "oci_reference": "ghcr.io/myorg/myapp:v1.0.0"
+}
+----
+
+==== Example 3: URL-Encoded pURL
+
+When the pURL contains special characters, it must be URL-encoded:
+
+[source,bash]
+----
+curl "http://localhost:8080/resolve?purl=pkg%3Aoci%2Fnginx%40sha256%3Aabcd1234"
+----
+
+=== Error Handling
+
+The API returns appropriate HTTP status codes and error messages:
+
+==== Missing pURL Parameter
+
+Request:
+[source,bash]
+----
+curl http://localhost:8080/resolve
+----
+
+Response (400 Bad Request):
+[source,json]
+----
+{
+  "error": "missing required parameter: purl"
+}
+----
+
+==== Invalid pURL Format
+
+Request:
+[source,bash]
+----
+curl "http://localhost:8080/resolve?purl=invalid-purl"
+----
+
+Response (400 Bad Request):
+[source,json]
+----
+{
+  "error": "invalid purl format: ...",
+  "purl": "invalid-purl"
+}
+----
+
+==== Unsupported pURL Type
+
+Request:
+[source,bash]
+----
+curl "http://localhost:8080/resolve?purl=pkg:npm/express@4.18.0"
+----
+
+Response (400 Bad Request):
+[source,json]
+----
+{
+  "error": "unsupported purl type 'npm', only 'oci' is supported",
+  "purl": "pkg:npm/express@4.18.0"
+}
+----
+
+== Monitoring and Health Checks
+
+=== Health Check Endpoint
+
+The `/healthz` endpoint is used for health checks and readiness probes:
+
+[source,bash]
+----
+curl http://localhost:8080/healthz
+----
+
+Returns `OK` with HTTP 200 status when the service is healthy.
+
+=== Kubernetes Probes
+
+The Kubernetes deployment includes readiness and liveness probes configured to use the `/healthz` endpoint:
+
+[source,yaml]
+----
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 3
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 3
+  periodSeconds: 5
+----
+
+== Integration Examples
+
+=== Using with curl
+
+[source,bash]
+----
+# Store the OCI reference in a variable
+OCI_REF=$(curl -s "http://localhost:8080/resolve?purl=pkg:oci/nginx@sha256:abcd1234" | jq -r '.oci_reference')
+
+# Use the reference with docker
+docker pull "$OCI_REF"
+----
+
+=== Using with Python
+
+[source,python]
+----
+import requests
+import urllib.parse
+
+def resolve_purl(purl):
+    base_url = "http://localhost:8080/resolve"
+    params = {"purl": purl}
+    response = requests.get(base_url, params=params)
+    response.raise_for_status()
+    return response.json()["oci_reference"]
+
+# Example usage
+purl = "pkg:oci/nginx@sha256:abcd1234"
+oci_ref = resolve_purl(purl)
+print(f"OCI Reference: {oci_ref}")
+----
+
+=== Using with Go
+
+[source,go]
+----
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "net/http"
+    "net/url"
+)
+
+type ResolveResponse struct {
+    Purl         string `json:"purl"`
+    OCIReference string `json:"oci_reference"`
+}
+
+func resolvePurl(purl string) (string, error) {
+    baseURL := "http://localhost:8080/resolve"
+    params := url.Values{}
+    params.Add("purl", purl)
+
+    resp, err := http.Get(baseURL + "?" + params.Encode())
+    if err != nil {
+        return "", err
+    }
+    defer resp.Body.Close()
+
+    var result ResolveResponse
+    if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+        return "", err
+    }
+
+    return result.OCIReference, nil
+}
+
+func main() {
+    purl := "pkg:oci/nginx@sha256:abcd1234"
+    ociRef, err := resolvePurl(purl)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Printf("OCI Reference: %s\n", ociRef)
+}
+----
+
+== Troubleshooting
+
+=== Service Not Starting
+
+*Check port availability:*
+[source,bash]
+----
+lsof -i :8080
+----
+
+If the port is in use, either stop the conflicting service or use a different port:
+[source,bash]
+----
+./purl-resolver serve --port 9090
+----
+
+=== Connection Refused
+
+Verify the service is running and listening on the expected port:
+[source,bash]
+----
+curl http://localhost:8080/healthz
+----
+
+If using Docker or Kubernetes, ensure port forwarding is properly configured.
+
+=== Invalid pURL Errors
+
+Ensure the pURL follows the correct format:
+[source]
+----
+pkg:oci/<name>[@<version>][?<qualifiers>]
+----
+
+The pURL must:
+* Start with `pkg:oci/`
+* Include a non-empty name
+* Use proper URL encoding for special characters
+
+== Performance Tuning
+
+=== Running Multiple Instances
+
+For high availability and increased throughput, deploy multiple replicas:
+
+[source,yaml]
+----
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: purl-resolver
+spec:
+  replicas: 3  # Increase this value
+  # ... rest of deployment spec
+----
+
+=== Resource Limits
+
+Configure appropriate resource limits based on your load:
+
+[source,yaml]
+----
+resources:
+  requests:
+    memory: "32Mi"
+    cpu: "100m"
+  limits:
+    memory: "64Mi"
+    cpu: "200m"
+----
+
+The resolver has a small memory footprint and can handle many requests with minimal resources.

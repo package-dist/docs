@@ -1,0 +1,126 @@
+= pURL Resolver Concepts
+
+The pURL Resolver is an HTTP service that translates Package URL (pURL) identifiers into OCI (Open Container Initiative) artifact references.
+
+== What is a Package URL?
+
+A Package URL (pURL) is a universal identifier for software packages that follows the https://github.com/package-url/purl-spec[pURL specification]. It provides a standardized way to identify packages across different ecosystems and registries.
+
+A pURL has the following format:
+
+[source]
+----
+pkg:<type>/<namespace>/<name>@<version>?<qualifiers>#<subpath>
+----
+
+For example, an OCI artifact might be identified as:
+
+[source]
+----
+pkg:oci/library/nginx@sha256:abcd1234...
+----
+
+== What is the pURL Resolver?
+
+The pURL Resolver is a lightweight HTTP service that converts OCI-type pURLs into standard OCI artifact references that can be used with container tools like Docker, Podman, or Kubernetes.
+
+== Architecture
+
+The pURL Resolver is built as a Go-based HTTP server with the following components:
+
+=== HTTP Server
+
+The service exposes two main endpoints:
+
+* **/healthz** - Health check endpoint for monitoring and readiness probes
+* **/resolve** - Resolves pURL identifiers to OCI references
+
+The server is built using Go's standard `net/http` package with a custom multiplexer for routing requests.
+
+=== pURL Parsing
+
+The resolver uses the official https://github.com/package-url/packageurl-go[packageurl-go] library to parse and validate pURL strings. This ensures compliance with the pURL specification and provides robust error handling for malformed identifiers.
+
+=== OCI Reference Conversion
+
+The conversion process transforms pURL components into OCI references:
+
+. **Registry determination**: Uses the `repository_url` qualifier if present, otherwise defaults to `docker.io`
+. **Tag or digest selection**: Prefers digests from the version field, falls back to tags from qualifiers, or uses `:latest` as default
+. **Reference construction**: Combines registry, repository, and tag/digest into a valid OCI reference
+
+== Supported pURL Types
+
+Currently, the resolver supports only `oci` type pURLs. Other package types (npm, maven, pypi, etc.) are not supported and will return an error.
+
+== Conversion Examples
+
+=== Example 1: Basic OCI Package with Version
+
+*Input pURL:*
+[source]
+----
+pkg:oci/library/nginx@sha256:abcd1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab
+----
+
+*Output OCI Reference:*
+[source]
+----
+docker.io/library/nginx@sha256:abcd1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab
+----
+
+=== Example 2: Custom Registry with Repository URL
+
+*Input pURL:*
+[source]
+----
+pkg:oci/myapp?repository_url=ghcr.io/myorg/myapp&tag=v1.2.3
+----
+
+*Output OCI Reference:*
+[source]
+----
+ghcr.io/myorg/myapp:v1.2.3
+----
+
+=== Example 3: Default Latest Tag
+
+*Input pURL:*
+[source]
+----
+pkg:oci/nginx
+----
+
+*Output OCI Reference:*
+[source]
+----
+docker.io/nginx:latest
+----
+
+== Security Considerations
+
+The pURL Resolver is designed with security in mind:
+
+* **Input validation**: All pURL strings are validated before processing
+* **URL decoding**: Query parameters are properly decoded to prevent injection attacks
+* **Minimal privileges**: The service runs as a non-root user (UID 65532) in containerized environments
+* **Read-only filesystem**: Container deployments use a read-only root filesystem
+* **Capability dropping**: All Linux capabilities are dropped in the container
+
+== Use Cases
+
+The pURL Resolver is useful in scenarios where:
+
+* You need to convert standardized pURL identifiers to registry-specific references
+* You're building tools that consume pURLs but need to interact with OCI registries
+* You want to maintain a technology-agnostic package identifier format
+* You're integrating with systems that produce or consume pURL formats (like SBOM tools)
+
+== Performance Characteristics
+
+The resolver is designed to be lightweight and fast:
+
+* Stateless service with no database dependencies
+* Low memory footprint (runs in a distroless container)
+* Synchronous request processing with quick response times
+* Suitable for high-throughput scenarios when deployed with multiple replicas
