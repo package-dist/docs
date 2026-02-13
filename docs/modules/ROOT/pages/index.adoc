@@ -7,3 +7,9 @@ Welcome to the Package Distribution documentation site.
 xref:what-is.adoc[What is Package Distribution?]
 
 Learn more about Package Distribution and how it can help you manage and distribute packages effectively.
+
+== pURL Resolver
+
+xref:purl-resolver-concepts.adoc[pURL ResolverConcepts]
+
+Learn more about the pURL Resolver and how it can help you resolve pURLs to OCI references.

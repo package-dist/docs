@@ -1,0 +1,89 @@
+= pURL Resolver API Reference
+
+This page provides complete API reference documentation for the pURL Resolver service.
+
+== Endpoints
+
+=== Health Check
+
+*Endpoint:* `/healthz`
+
+*Method:* `GET`
+
+*Description:* Health check endpoint for monitoring and readiness probes.
+
+==== Request
+
+No parameters required.
+
+==== Response
+
+*Status Code:* `200 OK`
+
+*Content-Type:* `text/plain`
+
+*Body:* `OK`
+
+==== Examples
+
+_Examples coming soon..._
+
+'''
+
+=== Resolve pURL
+
+*Endpoint:* `/resolve`
+
+*Method:* `GET`
+
+*Description:* Resolves a Package URL (pURL) to an OCI artifact reference.
+
+==== Request Parameters
+
+_Parameter documentation coming soon..._
+
+==== Response Format
+
+_Response format documentation coming soon..._
+
+==== Error Codes
+
+_Error code documentation coming soon..._
+
+==== Examples
+
+_Examples coming soon..._
+
+'''
+
+== Data Types
+
+=== ResolveResponse
+
+_Data type documentation coming soon..._
+
+=== ErrorResponse
+
+_Data type documentation coming soon..._
+
+'''
+
+== Client Libraries
+
+_Client library documentation coming soon..._
+
+'''
+
+== Authentication and Authorization
+
+_Authentication documentation coming soon..._
+
+'''
+
+== Rate Limiting
+
+_Rate limiting documentation coming soon..._
+
+'''
+
+_This reference documentation is under development. More content will be added soon._
