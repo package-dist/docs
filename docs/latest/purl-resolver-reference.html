@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Package Distribution :: Package Distribution Documentation</title>
-    <link rel="canonical" href="https://package-dist.github.io/docs/docs/latest/index.html">
+    <title>pURL Resolver API Reference :: Package Distribution Documentation</title>
+    <link rel="canonical" href="https://package-dist.github.io/docs/docs/latest/purl-resolver-reference.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../../_/css/site.css">
   </head>
@@ -58,7 +58,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="index.html">Home</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -76,7 +76,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="purl-resolver-howto.html">How-To Guide</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="purl-resolver-reference.html">API Reference</a>
   </li>
 </ul>
@@ -106,47 +106,153 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Package Distribution</a></li>
-    <li><a href="index.html">Home</a></li>
+    <li>pURL Resolver</li>
+    <li><a href="purl-resolver-reference.html">API Reference</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/package-dist/docs/edit/main/docs/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/package-dist/docs/edit/main/docs/modules/ROOT/pages/purl-resolver-reference.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Package Distribution</h1>
+<h1 class="page">pURL Resolver API Reference</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Welcome to the Package Distribution documentation site.</p>
+<p>This page provides complete API reference documentation for the pURL Resolver service.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_getting_started"><a class="anchor" href="#_getting_started"></a>Getting Started</h2>
+<h2 id="_endpoints"><a class="anchor" href="#_endpoints"></a>Endpoints</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_health_check"><a class="anchor" href="#_health_check"></a>Health Check</h3>
 <div class="paragraph">
-<p><a href="what-is.html" class="xref page">What is Package Distribution?</a></p>
+<p><strong>Endpoint:</strong> <code>/healthz</code></p>
 </div>
 <div class="paragraph">
-<p>Learn more about Package Distribution and how it can help you manage and distribute packages effectively.</p>
+<p><strong>Method:</strong> <code>GET</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Description:</strong> Health check endpoint for monitoring and readiness probes.</p>
+</div>
+<div class="sect3">
+<h4 id="_request"><a class="anchor" href="#_request"></a>Request</h4>
+<div class="paragraph">
+<p>No parameters required.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response"><a class="anchor" href="#_response"></a>Response</h4>
+<div class="paragraph">
+<p><strong>Status Code:</strong> <code>200 OK</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Content-Type:</strong> <code>text/plain</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Body:</strong> <code>OK</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_examples"><a class="anchor" href="#_examples"></a>Examples</h4>
+<div class="paragraph">
+<p><em>Examples coming soon&#8230;&#8203;</em></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_resolve_purl"><a class="anchor" href="#_resolve_purl"></a>Resolve pURL</h3>
+<div class="paragraph">
+<p><strong>Endpoint:</strong> <code>/resolve</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Method:</strong> <code>GET</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Description:</strong> Resolves a Package URL (pURL) to an OCI artifact reference.</p>
+</div>
+<div class="sect3">
+<h4 id="_request_parameters"><a class="anchor" href="#_request_parameters"></a>Request Parameters</h4>
+<div class="paragraph">
+<p><em>Parameter documentation coming soon&#8230;&#8203;</em></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_format"><a class="anchor" href="#_response_format"></a>Response Format</h4>
+<div class="paragraph">
+<p><em>Response format documentation coming soon&#8230;&#8203;</em></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_error_codes"><a class="anchor" href="#_error_codes"></a>Error Codes</h4>
+<div class="paragraph">
+<p><em>Error code documentation coming soon&#8230;&#8203;</em></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_examples_2"><a class="anchor" href="#_examples_2"></a>Examples</h4>
+<div class="paragraph">
+<p><em>Examples coming soon&#8230;&#8203;</em></p>
+</div>
+<hr>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_purl_resolver"><a class="anchor" href="#_purl_resolver"></a>pURL Resolver</h2>
+<h2 id="_data_types"><a class="anchor" href="#_data_types"></a>Data Types</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_resolveresponse"><a class="anchor" href="#_resolveresponse"></a>ResolveResponse</h3>
+<div class="paragraph">
+<p><em>Data type documentation coming soon&#8230;&#8203;</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_errorresponse"><a class="anchor" href="#_errorresponse"></a>ErrorResponse</h3>
+<div class="paragraph">
+<p><em>Data type documentation coming soon&#8230;&#8203;</em></p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_client_libraries"><a class="anchor" href="#_client_libraries"></a>Client Libraries</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="purl-resolver-concepts.html" class="xref page">pURL ResolverConcepts</a></p>
+<p><em>Client library documentation coming soon&#8230;&#8203;</em></p>
 </div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_authentication_and_authorization"><a class="anchor" href="#_authentication_and_authorization"></a>Authentication and Authorization</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Learn more about the pURL Resolver and how it can help you resolve pURLs to OCI references.</p>
+<p><em>Authentication documentation coming soon&#8230;&#8203;</em></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rate_limiting"><a class="anchor" href="#_rate_limiting"></a>Rate Limiting</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Rate limiting documentation coming soon&#8230;&#8203;</em></p>
+</div>
+<hr>
+<div class="paragraph">
+<p><em>This reference documentation is under development. More content will be added soon.</em></p>
 </div>
 </div>
 </div>

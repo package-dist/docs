@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pURL Resolver How-To Guide :: Package Distribution Documentation</title>
+    <link rel="canonical" href="https://package-dist.github.io/docs/docs/latest/purl-resolver-howto.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://package-dist.github.io/docs">Package Distribution Documentation</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Package Distribution</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Home</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="what-is.html">What is Package Distribution?</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">pURL Resolver</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="purl-resolver-concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="purl-resolver-howto.html">How-To Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="purl-resolver-reference.html">API Reference</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Package Distribution</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Package Distribution</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Package Distribution</a></li>
+    <li>pURL Resolver</li>
+    <li><a href="purl-resolver-howto.html">How-To Guide</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/package-dist/docs/edit/main/docs/modules/ROOT/pages/purl-resolver-howto.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">pURL Resolver How-To Guide</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide provides step-by-step instructions for deploying, configuring, and using the pURL Resolver service.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_locally"><a class="anchor" href="#_running_locally"></a>Running Locally</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Go 1.21 or later</p>
+</li>
+<li>
+<p>Git</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build_and_run_from_source"><a class="anchor" href="#_build_and_run_from_source"></a>Build and Run from Source</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the repository:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone https://github.com/package-dist/purl-resolver
+cd purl-resolver</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download dependencies:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">go mod download</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build the binary:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">go build -v -o purl-resolver .</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./purl-resolver serve</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The server will start on port 8080 by default.</p>
+</div>
+</li>
+<li>
+<p>Verify the service is running:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl http://localhost:8080/healthz</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should receive an <code>OK</code> response.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_with_custom_port"><a class="anchor" href="#_running_with_custom_port"></a>Running with Custom Port</h3>
+<div class="paragraph">
+<p>To run the server on a different port, use the <code>--port</code> flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./purl-resolver serve --port 9090</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or use the short form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./purl-resolver serve -p 9090</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deploying_to_kubernetes"><a class="anchor" href="#_deploying_to_kubernetes"></a>Deploying to Kubernetes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_prerequisites_2"><a class="anchor" href="#_prerequisites_2"></a>Prerequisites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Kubernetes cluster (v1.20+)</p>
+</li>
+<li>
+<p>kubectl configured to access your cluster</p>
+</li>
+<li>
+<p>ko (for building container images)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploy_using_kubernetes_manifests"><a class="anchor" href="#_deploy_using_kubernetes_manifests"></a>Deploy Using Kubernetes Manifests</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Build and deploy using ko:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">KO_DOCKER_REPO=&lt;your-registry&gt; ko apply -f deploy/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Replace <code>&lt;your-registry&gt;</code> with your container registry (e.g., <code>gcr.io/my-project</code> or <code>ghcr.io/myorg</code>).</p>
+</div>
+</li>
+<li>
+<p>Verify the deployment:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get deployments
+kubectl get pods
+kubectl get services</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Forward the service port to your local machine:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl port-forward service/purl-resolver 8080:80</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Test the service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl http://localhost:8080/healthz</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploy_to_local_kind_cluster"><a class="anchor" href="#_deploy_to_local_kind_cluster"></a>Deploy to Local KinD Cluster</h3>
+<div class="paragraph">
+<p>For local testing with Kubernetes in Docker (KinD):</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a KinD cluster:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">make kind-create</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and deploy:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">make ko-apply</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>View logs:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">make logs</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Forward the port:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">make port-forward</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Clean up when done:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">make kind-delete</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_the_resolver_api"><a class="anchor" href="#_using_the_resolver_api"></a>Using the Resolver API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_resolve_a_purl_to_an_oci_reference"><a class="anchor" href="#_resolve_a_purl_to_an_oci_reference"></a>Resolve a pURL to an OCI Reference</h3>
+<div class="paragraph">
+<p>To resolve a pURL, make a GET request to the <code>/resolve</code> endpoint with the pURL as a query parameter.</p>
+</div>
+<div class="sect3">
+<h4 id="_example_1_resolve_with_digest"><a class="anchor" href="#_example_1_resolve_with_digest"></a>Example 1: Resolve with Digest</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl "http://localhost:8080/resolve?purl=pkg:oci/nginx@sha256:abcd1234"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "purl": "pkg:oci/nginx@sha256:abcd1234",
+  "oci_reference": "docker.io/nginx@sha256:abcd1234"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_2_resolve_with_custom_registry"><a class="anchor" href="#_example_2_resolve_with_custom_registry"></a>Example 2: Resolve with Custom Registry</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl "http://localhost:8080/resolve?purl=pkg:oci/myapp?repository_url=ghcr.io/myorg/myapp&amp;tag=v1.0.0"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "purl": "pkg:oci/myapp?repository_url=ghcr.io/myorg/myapp&amp;tag=v1.0.0",
+  "oci_reference": "ghcr.io/myorg/myapp:v1.0.0"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_3_url_encoded_purl"><a class="anchor" href="#_example_3_url_encoded_purl"></a>Example 3: URL-Encoded pURL</h4>
+<div class="paragraph">
+<p>When the pURL contains special characters, it must be URL-encoded:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl "http://localhost:8080/resolve?purl=pkg%3Aoci%2Fnginx%40sha256%3Aabcd1234"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_error_handling"><a class="anchor" href="#_error_handling"></a>Error Handling</h3>
+<div class="paragraph">
+<p>The API returns appropriate HTTP status codes and error messages:</p>
+</div>
+<div class="sect3">
+<h4 id="_missing_purl_parameter"><a class="anchor" href="#_missing_purl_parameter"></a>Missing pURL Parameter</h4>
+<div class="paragraph">
+<p>Request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl http://localhost:8080/resolve</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response (400 Bad Request):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "error": "missing required parameter: purl"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_invalid_purl_format"><a class="anchor" href="#_invalid_purl_format"></a>Invalid pURL Format</h4>
+<div class="paragraph">
+<p>Request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl "http://localhost:8080/resolve?purl=invalid-purl"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response (400 Bad Request):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "error": "invalid purl format: ...",
+  "purl": "invalid-purl"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_unsupported_purl_type"><a class="anchor" href="#_unsupported_purl_type"></a>Unsupported pURL Type</h4>
+<div class="paragraph">
+<p>Request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl "http://localhost:8080/resolve?purl=pkg:npm/express@4.18.0"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response (400 Bad Request):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "error": "unsupported purl type 'npm', only 'oci' is supported",
+  "purl": "pkg:npm/express@4.18.0"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_and_health_checks"><a class="anchor" href="#_monitoring_and_health_checks"></a>Monitoring and Health Checks</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_health_check_endpoint"><a class="anchor" href="#_health_check_endpoint"></a>Health Check Endpoint</h3>
+<div class="paragraph">
+<p>The <code>/healthz</code> endpoint is used for health checks and readiness probes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl http://localhost:8080/healthz</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Returns <code>OK</code> with HTTP 200 status when the service is healthy.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kubernetes_probes"><a class="anchor" href="#_kubernetes_probes"></a>Kubernetes Probes</h3>
+<div class="paragraph">
+<p>The Kubernetes deployment includes readiness and liveness probes configured to use the <code>/healthz</code> endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">livenessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 3
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 3
+  periodSeconds: 5</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_integration_examples"><a class="anchor" href="#_integration_examples"></a>Integration Examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_using_with_curl"><a class="anchor" href="#_using_with_curl"></a>Using with curl</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Store the OCI reference in a variable
+OCI_REF=$(curl -s "http://localhost:8080/resolve?purl=pkg:oci/nginx@sha256:abcd1234" | jq -r '.oci_reference')
+
+# Use the reference with docker
+docker pull "$OCI_REF"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_with_python"><a class="anchor" href="#_using_with_python"></a>Using with Python</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import requests
+import urllib.parse
+
+def resolve_purl(purl):
+    base_url = "http://localhost:8080/resolve"
+    params = {"purl": purl}
+    response = requests.get(base_url, params=params)
+    response.raise_for_status()
+    return response.json()["oci_reference"]
+
+# Example usage
+purl = "pkg:oci/nginx@sha256:abcd1234"
+oci_ref = resolve_purl(purl)
+print(f"OCI Reference: {oci_ref}")</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_with_go"><a class="anchor" href="#_using_with_go"></a>Using with Go</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-go hljs" data-lang="go">package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "net/http"
+    "net/url"
+)
+
+type ResolveResponse struct {
+    Purl         string `json:"purl"`
+    OCIReference string `json:"oci_reference"`
+}
+
+func resolvePurl(purl string) (string, error) {
+    baseURL := "http://localhost:8080/resolve"
+    params := url.Values{}
+    params.Add("purl", purl)
+
+    resp, err := http.Get(baseURL + "?" + params.Encode())
+    if err != nil {
+        return "", err
+    }
+    defer resp.Body.Close()
+
+    var result ResolveResponse
+    if err := json.NewDecoder(resp.Body).Decode(&amp;result); err != nil {
+        return "", err
+    }
+
+    return result.OCIReference, nil
+}
+
+func main() {
+    purl := "pkg:oci/nginx@sha256:abcd1234"
+    ociRef, err := resolvePurl(purl)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Printf("OCI Reference: %s\n", ociRef)
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting"><a class="anchor" href="#_troubleshooting"></a>Troubleshooting</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_service_not_starting"><a class="anchor" href="#_service_not_starting"></a>Service Not Starting</h3>
+<div class="paragraph">
+<p><strong>Check port availability:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">lsof -i :8080</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the port is in use, either stop the conflicting service or use a different port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./purl-resolver serve --port 9090</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connection_refused"><a class="anchor" href="#_connection_refused"></a>Connection Refused</h3>
+<div class="paragraph">
+<p>Verify the service is running and listening on the expected port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl http://localhost:8080/healthz</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If using Docker or Kubernetes, ensure port forwarding is properly configured.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_invalid_purl_errors"><a class="anchor" href="#_invalid_purl_errors"></a>Invalid pURL Errors</h3>
+<div class="paragraph">
+<p>Ensure the pURL follows the correct format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">pkg:oci/&lt;name&gt;[@&lt;version&gt;][?&lt;qualifiers&gt;]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The pURL must:
+* Start with <code>pkg:oci/</code>
+* Include a non-empty name
+* Use proper URL encoding for special characters</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_performance_tuning"><a class="anchor" href="#_performance_tuning"></a>Performance Tuning</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_running_multiple_instances"><a class="anchor" href="#_running_multiple_instances"></a>Running Multiple Instances</h3>
+<div class="paragraph">
+<p>For high availability and increased throughput, deploy multiple replicas:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: purl-resolver
+spec:
+  replicas: 3  # Increase this value
+  # ... rest of deployment spec</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_resource_limits"><a class="anchor" href="#_resource_limits"></a>Resource Limits</h3>
+<div class="paragraph">
+<p>Configure appropriate resource limits based on your load:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">resources:
+  requests:
+    memory: "32Mi"
+    cpu: "100m"
+  limits:
+    memory: "64Mi"
+    cpu: "200m"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The resolver has a small memory footprint and can handle many requests with minimal resources.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

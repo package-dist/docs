@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pURL Resolver Concepts :: Package Distribution Documentation</title>
+    <link rel="canonical" href="https://package-dist.github.io/docs/docs/latest/purl-resolver-concepts.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://package-dist.github.io/docs">Package Distribution Documentation</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Package Distribution</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Home</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="what-is.html">What is Package Distribution?</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">pURL Resolver</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="purl-resolver-concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="purl-resolver-howto.html">How-To Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="purl-resolver-reference.html">API Reference</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Package Distribution</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Package Distribution</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Package Distribution</a></li>
+    <li>pURL Resolver</li>
+    <li><a href="purl-resolver-concepts.html">Concepts</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/package-dist/docs/edit/main/docs/modules/ROOT/pages/purl-resolver-concepts.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">pURL Resolver Concepts</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The pURL Resolver is an HTTP service that translates Package URL (pURL) identifiers into OCI (Open Container Initiative) artifact references.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_a_package_url"><a class="anchor" href="#_what_is_a_package_url"></a>What is a Package URL?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A Package URL (pURL) is a universal identifier for software packages that follows the <a href="https://github.com/package-url/purl-spec">pURL specification</a>. It provides a standardized way to identify packages across different ecosystems and registries.</p>
+</div>
+<div class="paragraph">
+<p>A pURL has the following format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">pkg:&lt;type&gt;/&lt;namespace&gt;/&lt;name&gt;@&lt;version&gt;?&lt;qualifiers&gt;#&lt;subpath&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, an OCI artifact might be identified as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">pkg:oci/library/nginx@sha256:abcd1234...</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_the_purl_resolver"><a class="anchor" href="#_what_is_the_purl_resolver"></a>What is the pURL Resolver?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The pURL Resolver is a lightweight HTTP service that converts OCI-type pURLs into standard OCI artifact references that can be used with container tools like Docker, Podman, or Kubernetes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_architecture"><a class="anchor" href="#_architecture"></a>Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The pURL Resolver is built as a Go-based HTTP server with the following components:</p>
+</div>
+<div class="sect2">
+<h3 id="_http_server"><a class="anchor" href="#_http_server"></a>HTTP Server</h3>
+<div class="paragraph">
+<p>The service exposes two main endpoints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>/healthz</strong> - Health check endpoint for monitoring and readiness probes</p>
+</li>
+<li>
+<p><strong>/resolve</strong> - Resolves pURL identifiers to OCI references</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The server is built using Go&#8217;s standard <code>net/http</code> package with a custom multiplexer for routing requests.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_purl_parsing"><a class="anchor" href="#_purl_parsing"></a>pURL Parsing</h3>
+<div class="paragraph">
+<p>The resolver uses the official <a href="https://github.com/package-url/packageurl-go">packageurl-go</a> library to parse and validate pURL strings. This ensures compliance with the pURL specification and provides robust error handling for malformed identifiers.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_oci_reference_conversion"><a class="anchor" href="#_oci_reference_conversion"></a>OCI Reference Conversion</h3>
+<div class="paragraph">
+<p>The conversion process transforms pURL components into OCI references:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Registry determination</strong>: Uses the <code>repository_url</code> qualifier if present, otherwise defaults to <code>docker.io</code></p>
+</li>
+<li>
+<p><strong>Tag or digest selection</strong>: Prefers digests from the version field, falls back to tags from qualifiers, or uses <code>:latest</code> as default</p>
+</li>
+<li>
+<p><strong>Reference construction</strong>: Combines registry, repository, and tag/digest into a valid OCI reference</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_supported_purl_types"><a class="anchor" href="#_supported_purl_types"></a>Supported pURL Types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently, the resolver supports only <code>oci</code> type pURLs. Other package types (npm, maven, pypi, etc.) are not supported and will return an error.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conversion_examples"><a class="anchor" href="#_conversion_examples"></a>Conversion Examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_example_1_basic_oci_package_with_version"><a class="anchor" href="#_example_1_basic_oci_package_with_version"></a>Example 1: Basic OCI Package with Version</h3>
+<div class="paragraph">
+<p><strong>Input pURL:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">pkg:oci/library/nginx@sha256:abcd1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output OCI Reference:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">docker.io/library/nginx@sha256:abcd1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_2_custom_registry_with_repository_url"><a class="anchor" href="#_example_2_custom_registry_with_repository_url"></a>Example 2: Custom Registry with Repository URL</h3>
+<div class="paragraph">
+<p><strong>Input pURL:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">pkg:oci/myapp?repository_url=ghcr.io/myorg/myapp&amp;tag=v1.2.3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output OCI Reference:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">ghcr.io/myorg/myapp:v1.2.3</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_3_default_latest_tag"><a class="anchor" href="#_example_3_default_latest_tag"></a>Example 3: Default Latest Tag</h3>
+<div class="paragraph">
+<p><strong>Input pURL:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">pkg:oci/nginx</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output OCI Reference:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">docker.io/nginx:latest</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_security_considerations"><a class="anchor" href="#_security_considerations"></a>Security Considerations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The pURL Resolver is designed with security in mind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Input validation</strong>: All pURL strings are validated before processing</p>
+</li>
+<li>
+<p><strong>URL decoding</strong>: Query parameters are properly decoded to prevent injection attacks</p>
+</li>
+<li>
+<p><strong>Minimal privileges</strong>: The service runs as a non-root user (UID 65532) in containerized environments</p>
+</li>
+<li>
+<p><strong>Read-only filesystem</strong>: Container deployments use a read-only root filesystem</p>
+</li>
+<li>
+<p><strong>Capability dropping</strong>: All Linux capabilities are dropped in the container</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_use_cases"><a class="anchor" href="#_use_cases"></a>Use Cases</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The pURL Resolver is useful in scenarios where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You need to convert standardized pURL identifiers to registry-specific references</p>
+</li>
+<li>
+<p>You&#8217;re building tools that consume pURLs but need to interact with OCI registries</p>
+</li>
+<li>
+<p>You want to maintain a technology-agnostic package identifier format</p>
+</li>
+<li>
+<p>You&#8217;re integrating with systems that produce or consume pURL formats (like SBOM tools)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_performance_characteristics"><a class="anchor" href="#_performance_characteristics"></a>Performance Characteristics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The resolver is designed to be lightweight and fast:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stateless service with no database dependencies</p>
+</li>
+<li>
+<p>Low memory footprint (runs in a distroless container)</p>
+</li>
+<li>
+<p>Synchronous request processing with quick response times</p>
+</li>
+<li>
+<p>Suitable for high-throughput scenarios when deployed with multiple replicas</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
